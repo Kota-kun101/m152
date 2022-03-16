@@ -40,7 +40,11 @@ export async function remove(id) {
 } 
 
 export function save(movie) {
-    const query = 'UPDATE Movies SET Title = ' + movie.title + ', Year = ' + movie.year + 'WHERE ID = ' + id;
-    const [data]  = await connection.query(query);   
-    return data; 
+    const res = await get(movie.id);
+    if(res.length == 0){
+        insert(movie);
+    }
+    else{
+        update(movie);
+    }
 }
