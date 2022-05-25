@@ -2,7 +2,7 @@ import { getAll, remove, get, save }  from './model.js';
 import { render } from './view.js'; 
 import { render as form } from './form.js'; 
 export async function listAction(request, response) {   
-    const data = await getAll();   
+    const data = await getAll(request.user.id);   
     const body = render(data); 
     response.send(body); 
 } 
@@ -17,7 +17,9 @@ export async function formAction(request, response) {
     let movie = {
          id: '', 
          title: '', 
-         year: '' 
+         year: '',
+         isPublic: '',
+         ownerId: '',
         };    
 
     if (request.params.id)    
@@ -33,7 +35,9 @@ export async function saveAction(request, response) {
     const movie = { 
         id: request.body.id, 
         title: request.body.title, 
-        year: request.body.year, 
+        year: request.body.year,
+        isPublic: request.body.isPublic,
+        ownerId: request.user.id
     };   
 
     await save(movie);   

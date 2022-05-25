@@ -13,6 +13,7 @@ export function render(movies) {
                 <tr>
                     <th>Id</th>
                     <th>Title</th>
+                    <th>Year</th>
                     <th></th>
                     <th></th>
                 </tr>
@@ -20,18 +21,22 @@ export function render(movies) {
             <tbody>      
                 ${ movies        
                     .map  (           
-                        (movie)  =>  `         
-                <tr>    
-                    <td>${ movie.id }</td>          
-                    <td>${ movie.title }</td>          
-                    <td><a href="/movie/delete/${ movie.id  }">löschen</a></td>          
-                    <td><a href="/movie/form/${ movie.id  }">bearbeiten</a></td> 
-                </tr>`,         
-                )         
-                .join('' )}     
+                        function(movie){ 
+                                return (
+                                    `<tr>    
+                                        <td>${ movie.id }</td>          
+                                        <td>${ movie.title }</td>
+                                        <td>${ movie.year }</td>         
+                                        <td><a href="/movie/delete/${ movie.id  }">löschen</a></td>          
+                                        <td><a href="/movie/form/${ movie.id  }">bearbeiten</a></td> 
+                                    </tr>`
+                                )    
+                        })         
+                .join('')}     
             </tbody>  
         </table>  
         <a href="/movie/form">neu</a>
+        <a href="/logout">abmelden</a>
     </body>
     </html>  
     `; 
