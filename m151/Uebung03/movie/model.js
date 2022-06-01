@@ -1,3 +1,4 @@
+import exp from "constants";
 import mysql from "mysql2/promise"; 
 
 const connection = await mysql.createConnection({ 
@@ -11,8 +12,8 @@ const connection = await mysql.createConnection({
 await connection.connect(); 
 
 export async function getAll(uid) {
-    const query = 'SELECT * FROM movie WHERE isPublic = true OR ownerId = ?';
-    const [data] = await connection.query(query, uid);
+    const query = 'SELECT movie.id, movie.title, movie.year, movie.isPublic, movie.ownerId, Ratings.rating FROM movie JOIN Ratings ON Ratings.user = ? AND Ratings.movie = movie.id WHERE isPublic = true OR ownerId = ?';
+    const [data] = await connection.query(query, [uid, uid]);
     return data;
   }
   
@@ -37,6 +38,12 @@ export async function getAll(uid) {
   export async function remove(id) {
     const query = 'DELETE FROM movie WHERE id = ?';
     await connection.query(query, [id]);
+    return;
+  }
+
+  export async function saveRating(rating){
+    const query = 'UPDATE Ratings SET user = ?, movie = ?, rating = ? WHERE movie = ? AND user = ?'
+    await connection.query(query, [rating.user, rating.movie, rating.rating, rating.movie, rating.user]);
     return;
   }
   
