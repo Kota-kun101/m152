@@ -99,39 +99,48 @@ export function render(movies) {
                                         <td>${ movie.year }</td>         
                                         <td><input type="checkbox" id="isPublic" name="isPublic" value="1" ${checked} disabled/></td>
                                         <td>
-                                            <form class="rating" action="/save/rating" method="post">
+                                            <div class="rating">
                                                 <label>
-                                                    <input type="radio" name="rating" value="1" ${movie.rating == 1 ? "checked" : ""}/>
-                                                    <span class="icon">★</span>
+                                                    <a href="/movie/save/rating/${ movie.id  }/1">
+                                                      <input type="radio" name="${ movie.id }" value="1" ${movie.rating == 1 ? "checked" : ""}/>
+                                                      <span class="icon">★</span>
+                                                    </a>
                                                 </label>
                                                 <label>
-                                                    <input type="radio" name="rating" value="2" ${movie.rating == 2 ? "checked" : ""}/>
-                                                    <span class="icon">★</span>
-                                                    <span class="icon">★</span>
+                                                    <a href="/movie/save/rating/${ movie.id  }/2">
+                                                        <input type="radio" name="${ movie.id }" value="2" ${movie.rating == 2 ? "checked" : ""}/>
+                                                        <span class="icon">★</span>
+                                                        <span class="icon">★</span>
+                                                    </a>
                                                 </label>
                                                 <label>
-                                                    <input type="radio" name="rating" value="3" ${movie.rating == 3 ? "checked" : ""}/>
-                                                    <span class="icon">★</span>
-                                                    <span class="icon">★</span>
-                                                    <span class="icon">★</span>   
+                                                    <a href="/movie/save/rating/${ movie.id  }/3">
+                                                        <input type="radio" name="${ movie.id }" value="3" ${movie.rating == 3 ? "checked" : ""}/>
+                                                        <span class="icon">★</span>
+                                                        <span class="icon">★</span>
+                                                        <span class="icon">★</span>   
+                                                    </a>
                                                 </label>
                                                 <label>
-                                                    <input type="radio" name="rating" value="4" ${movie.rating == 4 ? "checked" : ""}/>
-                                                    <span class="icon">★</span>
-                                                    <span class="icon">★</span>
-                                                    <span class="icon">★</span>
-                                                    <span class="icon">★</span>
+                                                    <a href="/movie/save/rating/${ movie.id  }/4">
+                                                        <input type="radio" name="${ movie.id }" value="4" ${movie.rating == 4 ? "checked" : ""}/>
+                                                        <span class="icon">★</span>
+                                                        <span class="icon">★</span>
+                                                        <span class="icon">★</span>
+                                                        <span class="icon">★</span>
+                                                    </a>
                                                 </label>
                                                 <label>
-                                                    <input type="radio" name="rating" value="5" ${movie.rating == 5 ? "checked" : ""}/>
-                                                    <span class="icon">★</span>
-                                                    <span class="icon">★</span>
-                                                    <span class="icon">★</span>
-                                                    <span class="icon">★</span>
-                                                    <span class="icon">★</span>
+                                                    <a href="/movie/save/rating/${ movie.id  }/5">
+                                                        <input type="radio" name="${ movie.id }" value="5" ${movie.rating == 5 ? "checked" : ""}/>
+                                                        <span class="icon">★</span>
+                                                        <span class="icon">★</span>
+                                                        <span class="icon">★</span>
+                                                        <span class="icon">★</span>
+                                                        <span class="icon">★</span>
+                                                    </a>
                                                 </label>
-                                            
-                                            </form>
+                                            </div>
                                         </td>
                                         <td><a href="/movie/delete/${ movie.id  }">löschen</a></td>          
                                         <td><a href="/movie/form/${ movie.id  }">bearbeiten</a></td> 
@@ -144,11 +153,6 @@ export function render(movies) {
         <a href="/movie/form">neu</a>
         <a href="/logout">abmelden</a>
     </body>
-    </html>  
-    <script>
-        $(':radio').change(function() {
-            console.log('New star rating: ' + this.value);
-        });
-    </script>
+    </html>
     `; 
 } 

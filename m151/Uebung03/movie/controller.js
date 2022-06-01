@@ -49,8 +49,8 @@ export async function saveActionRating(request, response){
 
     const rating = {
         user: request.user.id,
-        movie: request.body.movieId,
-        rating: request.body.rating
+        movie: request.params.movieId,
+        rating: request.params.rating
     }
 
     await saveRating(rating);

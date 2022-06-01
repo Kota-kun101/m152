@@ -12,7 +12,7 @@ const connection = await mysql.createConnection({
 await connection.connect(); 
 
 export async function getAll(uid) {
-    const query = 'SELECT movie.id, movie.title, movie.year, movie.isPublic, movie.ownerId, Ratings.rating FROM movie JOIN Ratings ON Ratings.user = ? AND Ratings.movie = movie.id WHERE isPublic = true OR ownerId = ?';
+    const query = 'SELECT movie.id, movie.title, movie.year, movie.isPublic, movie.ownerId, Ratings.rating FROM movie LEFT JOIN Ratings ON Ratings.user = ? AND Ratings.movie = movie.id WHERE isPublic = true OR ownerId = ?';
     const [data] = await connection.query(query, [uid, uid]);
     return data;
   }
@@ -42,8 +42,30 @@ export async function getAll(uid) {
   }
 
   export async function saveRating(rating){
+    const query = 'SELECT * FROM Ratings WHERE user = ? AND movie = ?';
+    const [data] = await connection.query(query, [rating.user, rating.movie]);
+
+    console.log("length: " + data.length);
+
+    if(data.length > 0){
+      console.log("1");
+      updateRating(rating);
+    }
+    else{
+      console.log("2");
+      insertRating(rating);
+    }
+  }
+
+  export async function updateRating(rating){
     const query = 'UPDATE Ratings SET user = ?, movie = ?, rating = ? WHERE movie = ? AND user = ?'
     await connection.query(query, [rating.user, rating.movie, rating.rating, rating.movie, rating.user]);
+    return;
+  }
+
+  export async function insertRating(rating){
+    const query = 'INSERT INTO Ratings (user, movie, rating) VALUES (?, ?, ?)'
+    await connection.query(query, [rating.user, rating.movie, rating.rating]);
     return;
   }
   
