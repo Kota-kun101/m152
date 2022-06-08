@@ -12,7 +12,7 @@ const connection = await mysql.createConnection({
 await connection.connect(); 
 
 export async function getAll(uid) {
-    const query = 'SELECT movie.id, movie.title, movie.year, movie.isPublic, movie.ownerId, Ratings.rating FROM movie LEFT JOIN Ratings ON Ratings.user = ? AND Ratings.movie = movie.id WHERE isPublic = true OR ownerId = ?';
+    const query = 'SELECT movie.id, movie.title, movie.year, movie.isPublic, movie.ownerId, Ratings.rating, avgRating.avgrating FROM movie LEFT JOIN (SELECT Ratings.movie AS movieId, AVG(Ratings.rating) AS avgrating FROM Ratings GROUP BY Ratings.movie) avgRating ON avgRating.movieId = movie.id LEFT JOIN Ratings ON Ratings.user = ? AND Ratings.movie = movie.id WHERE isPublic = true OR ownerId = ?';
     const [data] = await connection.query(query, [uid, uid]);
     return data;
   }

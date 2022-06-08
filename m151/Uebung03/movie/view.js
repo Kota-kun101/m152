@@ -85,6 +85,7 @@ export function render(movies) {
                     <th>Rating</th>
                     <th></th>
                     <th></th>
+                    <th></th>
                 </tr>
             </thead>    
             <tbody>      
@@ -142,6 +143,7 @@ export function render(movies) {
                                                 </label>
                                             </div>
                                         </td>
+                                        <td><span>${ Math.round(movie.avgrating * 100) / 100 }</span></td>
                                         <td><a href="/movie/delete/${ movie.id  }">löschen</a></td>          
                                         <td><a href="/movie/form/${ movie.id  }">bearbeiten</a></td> 
                                     </tr>`
